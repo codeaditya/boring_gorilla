@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BoringGorilla</class>
+ <widget class="QMainWindow" name="BoringGorilla">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>720</width>
+    <height>405</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Tahoma</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>BoringGorilla</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QGroupBox" name="date_group">
+        <property name="font">
+         <font>
+          <family>Tahoma</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="title">
+         <string>Dates</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Start Date</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDateTimeEdit" name="start_date">
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="displayFormat">
+            <string>dd-MMM-yyyy</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>End Date</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDateTimeEdit" name="end_date">
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="displayFormat">
+            <string>dd-MMM-yyyy</string>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QCheckBox" name="ignore_weekend">
+           <property name="toolTip">
+            <string extracomment="check to skip sat/sun"/>
+           </property>
+           <property name="statusTip">
+            <string extracomment="check to skip sat/sun"/>
+           </property>
+           <property name="text">
+            <string>Ignore Weekend</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="segment_group">
+        <property name="font">
+         <font>
+          <family>Tahoma</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="title">
+         <string>Exchange/Segments</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="nse_indices">
+           <property name="text">
+            <string>NSE Indices</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="nse_equities">
+           <property name="text">
+            <string>NSE Equities</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QCheckBox" name="nse_futures">
+           <property name="text">
+            <string>NSE Futures</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="action_group">
+        <property name="font">
+         <font>
+          <family>Tahoma</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="title">
+         <string>Action</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="2" column="0">
+          <widget class="QPushButton" name="exit_button">
+           <property name="toolTip">
+            <string extracomment="exit the program"/>
+           </property>
+           <property name="statusTip">
+            <string extracomment="exit the program"/>
+           </property>
+           <property name="text">
+            <string>Exit</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="process_button">
+           <property name="toolTip">
+            <string extracomment="process the files for checked segments for selected dates"/>
+           </property>
+           <property name="statusTip">
+            <string extracomment="process the files for checked segments for selected dates"/>
+           </property>
+           <property name="text">
+            <string>Process</string>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QCheckBox" name="debugging">
+           <property name="toolTip">
+            <string extracomment="check to skip downloading files"/>
+           </property>
+           <property name="statusTip">
+            <string extracomment="check to skip downloading files"/>
+           </property>
+           <property name="text">
+            <string>Debugging</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTextBrowser" name="log_browser">
+      <property name="lineWrapMode">
+       <enum>QTextEdit::NoWrap</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>720</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>start_date</tabstop>
+  <tabstop>end_date</tabstop>
+  <tabstop>ignore_weekend</tabstop>
+  <tabstop>segment_group</tabstop>
+  <tabstop>nse_indices</tabstop>
+  <tabstop>nse_equities</tabstop>
+  <tabstop>nse_futures</tabstop>
+  <tabstop>debugging</tabstop>
+  <tabstop>process_button</tabstop>
+  <tabstop>exit_button</tabstop>
+  <tabstop>log_browser</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>exit_button</sender>
+   <signal>clicked()</signal>
+   <receiver>BoringGorilla</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>600</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>200</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>segment_group</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>nse_indices</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>440</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>segment_group</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>nse_equities</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>105</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>segment_group</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>nse_futures</receiver>
+   <slot>setChecked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
