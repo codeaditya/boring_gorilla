@@ -102,6 +102,7 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.info("Downloading...")
         self.get_ui_values()
         self.log_window_state()
+        trader.DEBUGGING = self.debugging
         if self.nse_indices:
             trader.process_nse_indices(self.start_date, self.end_date,
                                        ignore_weekend=self.ignore_weekend)
