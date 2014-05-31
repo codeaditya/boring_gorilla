@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>720</width>
-    <height>405</height>
+    <height>403</height>
    </rect>
   </property>
   <property name="font">
@@ -23,10 +23,10 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_4">
+   <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
        <widget class="QGroupBox" name="date_group">
         <property name="font">
          <font>
@@ -94,7 +94,7 @@
         </layout>
        </widget>
       </item>
-      <item>
+      <item row="0" column="1">
        <widget class="QGroupBox" name="segment_group">
         <property name="font">
          <font>
@@ -133,65 +133,72 @@
         </layout>
        </widget>
       </item>
-      <item>
-       <widget class="QGroupBox" name="action_group">
-        <property name="font">
-         <font>
-          <family>Tahoma</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="title">
-         <string>Action</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="2" column="0">
-          <widget class="QPushButton" name="exit_button">
-           <property name="toolTip">
-            <string extracomment="exit the program"/>
-           </property>
-           <property name="statusTip">
-            <string extracomment="exit the program"/>
-           </property>
-           <property name="text">
-            <string>Exit</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="process_button">
-           <property name="toolTip">
-            <string extracomment="process the files for checked segments for selected dates"/>
-           </property>
-           <property name="statusTip">
-            <string extracomment="process the files for checked segments for selected dates"/>
-           </property>
-           <property name="text">
-            <string>Process</string>
-           </property>
-           <property name="autoDefault">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QCheckBox" name="debugging">
-           <property name="toolTip">
-            <string extracomment="check to skip downloading files"/>
-           </property>
-           <property name="statusTip">
-            <string extracomment="check to skip downloading files"/>
-           </property>
-           <property name="text">
-            <string>Debugging</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+      <item row="0" column="2">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="debugging">
+          <property name="toolTip">
+           <string extracomment="check to skip downloading files"/>
+          </property>
+          <property name="statusTip">
+           <string extracomment="check to skip downloading files"/>
+          </property>
+          <property name="text">
+           <string>Debugging</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QPushButton" name="process_button">
+            <property name="toolTip">
+             <string extracomment="process the files for checked segments for selected dates"/>
+            </property>
+            <property name="statusTip">
+             <string extracomment="process the files for checked segments for selected dates"/>
+            </property>
+            <property name="text">
+             <string>Process</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QPushButton" name="import_in_ami_button">
+            <property name="text">
+             <string>Import in Ami</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="generate_indices_button">
+            <property name="text">
+             <string>Generate Indices</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="exit_button">
+            <property name="toolTip">
+             <string extracomment="exit the program"/>
+            </property>
+            <property name="statusTip">
+             <string extracomment="exit the program"/>
+            </property>
+            <property name="text">
+             <string>Exit</string>
+            </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -213,8 +220,50 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionPreferences"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout_BoringGorilla"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuSettings"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="actionAbout_BoringGorilla">
+   <property name="text">
+    <string>About BoringGorilla</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>start_date</tabstop>
@@ -224,7 +273,6 @@
   <tabstop>nse_indices</tabstop>
   <tabstop>nse_equities</tabstop>
   <tabstop>nse_futures</tabstop>
-  <tabstop>debugging</tabstop>
   <tabstop>process_button</tabstop>
   <tabstop>exit_button</tabstop>
   <tabstop>log_browser</tabstop>
@@ -292,6 +340,22 @@
     <hint type="destinationlabel">
      <x>380</x>
      <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>BoringGorilla</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>202</y>
     </hint>
    </hints>
   </connection>

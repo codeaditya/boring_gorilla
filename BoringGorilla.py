@@ -5,7 +5,10 @@ import logging
 import sys
 
 from PyQt4 import QtCore, QtGui
+
 from BoringGorilla_design import Ui_BoringGorilla
+from preferences import PreferencesDialog
+from helpers import WorkerThread, GuiLogHandler
 
 import trader
 
@@ -73,6 +76,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.trader_thread.terminated.connect(self.restore_ui)
         self.connect(self.dummy_emitter, QtCore.SIGNAL("log_msg(QString)"),
                      self.ui.log_browser.append)
+        self.ui.actionPreferences.triggered.connect(self.show_preferences_dialog)
 
     def get_ui_values(self):
         self.start_date = self.ui.start_date.dateTime().toPyDateTime()
@@ -123,25 +127,10 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.debug("NSE Futures: {0}".format(str(self.nse_futures)))
         logger.debug("Debugging: {0}".format(str(self.debugging)))
 
-
-class WorkerThread(QtCore.QThread):
-    def __init__(self, func, args):
-        super(WorkerThread, self).__init__()
-        self.func = func
-        self.args = args
-
-    def run(self):
-        self.func(*self.args)
-
-
-class GuiLogHandler(logging.Handler):
-    def __init__(self, sig_emitter):
-        super(GuiLogHandler, self).__init__()
-        self.sig_emitter = sig_emitter
-
-    def emit(self, log_record):
-        message = self.format(log_record)
-        self.sig_emitter.emit(QtCore.SIGNAL("log_msg(QString)"), message)
+    def show_preferences_dialog(self):
+        logger.info("Opening the Preferences dialog.")
+        preferences_dialog = PreferencesDialog(parent=self)
+        preferences_dialog.show()
 
 
 if __name__ == "__main__":
