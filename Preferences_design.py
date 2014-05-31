@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_design/Preferences_design.ui'
 #
-# Created: Sat May 31 15:36:21 2014
+# Created: Sat May 31 16:38:49 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -23,7 +23,6 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-# noinspection PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8
 class Ui_GorillaPreferences(object):
     def setupUi(self, GorillaPreferences):
         GorillaPreferences.setObjectName(_fromUtf8("GorillaPreferences"))
@@ -117,9 +116,9 @@ class Ui_GorillaPreferences(object):
         self.gridLayout_4.addWidget(self.miscellaneous_prefs, 2, 0, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.pushButton = QtGui.QPushButton(GorillaPreferences)
-        self.pushButton.setObjectName(_fromUtf8("pushButton"))
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.restore_default_preferences = QtGui.QPushButton(GorillaPreferences)
+        self.restore_default_preferences.setObjectName(_fromUtf8("restore_default_preferences"))
+        self.horizontalLayout.addWidget(self.restore_default_preferences)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.save_preferences = QtGui.QPushButton(GorillaPreferences)
@@ -153,7 +152,7 @@ class Ui_GorillaPreferences(object):
         self.browse_ami_installation.setText(_translate("GorillaPreferences", "Browse...", None))
         self.miscellaneous_prefs.setTitle(_translate("GorillaPreferences", "Miscellaneous", None))
         self.preserve_raw_downloads.setText(_translate("GorillaPreferences", "Preserve Raw Downloads", None))
-        self.pushButton.setText(_translate("GorillaPreferences", "Restore Defaults", None))
+        self.restore_default_preferences.setText(_translate("GorillaPreferences", "Restore Defaults", None))
         self.save_preferences.setText(_translate("GorillaPreferences", "Save Preferences", None))
         self.cancel_preferences.setText(_translate("GorillaPreferences", "Cancel", None))
 

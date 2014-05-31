@@ -14,11 +14,13 @@ import trader
 
 ###############################################################################
 #### Add logging functionality ################################################
-logger = logging.getLogger("trader")
-logger.setLevel(logging.INFO)
-# Output formatting
 FORMATTER = logging.Formatter("{asctime} - {module:15s} - {process} - "
                               "{levelname:8s} - {message}", style="{")
+LOGGING_LEVEL = logging.INFO
+logger = logging.getLogger("trader")
+logger.setLevel(LOGGING_LEVEL)
+logger_preferences = logging.getLogger("preferences")
+logger_preferences.setLevel(LOGGING_LEVEL)
 ###############################################################################
 
 
@@ -69,6 +71,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.gui_log_handler = GuiLogHandler(self.dummy_emitter)
         self.gui_log_handler.setFormatter(FORMATTER)
         logger.addHandler(self.gui_log_handler)
+        logger_preferences.addHandler(self.gui_log_handler)
 
     def map_signals_and_slots(self):
         self.ui.process_button.clicked.connect(self.process_button_pressed)
