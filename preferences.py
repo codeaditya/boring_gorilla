@@ -6,7 +6,7 @@ The preferences dialog of BoringGorilla.
 
 """
 
-from configparser import ConfigParser
+import configparser
 import logging
 import os
 
@@ -16,57 +16,50 @@ from Preferences_design import Ui_GorillaPreferences
 
 ###############################################################################
 #### Add logging functionality ################################################
+FORMATTER = logging.Formatter("{asctime} - {module:15s} - {process} - "
+                              "{levelname:8s} - {message}", style="{")
+LOGGING_LEVEL = logging.INFO
+# logging.Logger object
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(LOGGING_LEVEL)
 # Console handler
 ch = logging.StreamHandler()
-# Output formatting
-formatter = logging.Formatter("{asctime} - {module:15s} - {process} - "
-                              "{levelname:8s} - {message}", style="{")
-ch.setFormatter(formatter)
-# Add console handler to logger object
+ch.setFormatter(FORMATTER)
 logger.addHandler(ch)
 ###############################################################################
 
 
 def process_config(filename='config.ini'):
-    config = ConfigParser()
+    """Process the config and write to disk.
+
+    :param filename: the location of the config file
+    :type filename: str
+
+    :returns: the config object
+    :rtype: configparser.ConfigParser
+    """
+    config = configparser.ConfigParser()
     config.read(filename)
-    sections = ["boring_gorilla", "amibroker"]
+    sections = ["boring_gorilla"]
     for section in sections:
         if section not in config:
             config[section] = {}
     boring_gorilla = config["boring_gorilla"]
-    amibroker = config["amibroker"]
+    boring_gorilla_default_config = {
+        "nse_indices_folder": os.path.join(os.getcwd(), "processed_data"),
+        "nse_equities_folder": os.path.join(os.getcwd(), "processed_data"),
+        "nse_futures_folder": os.path.join(os.getcwd(), "processed_data"),
+        "downloads_folder": os.path.join(os.getcwd(), "downloads"),
+        "preserve_raw_downloads": "True",
+        "ami_installation_folder": r'C:\Program Files\AmiBroker',
+        "ami_eod_db_folder": r'C:\Program Files\AmiBroker\Data-EOD',
+        "ami_intraday_db_folder": r'C:\Program Files\AmiBroker\Data-RT',
+    }
     config_to_be_written = False
-    if "nse_indices_folder" not in boring_gorilla:
-        boring_gorilla["nse_indices_folder"] = os.path.join(os.getcwd(),
-                                                            'processed_data')
-        config_to_be_written = True
-    if "nse_equities_folder" not in boring_gorilla:
-        boring_gorilla["nse_equities_folder"] = os.path.join(os.getcwd(),
-                                                             'processed_data')
-        config_to_be_written = True
-    if "nse_futures_folder" not in boring_gorilla:
-        boring_gorilla["nse_futures_folder"] = os.path.join(os.getcwd(),
-                                                            'processed_data')
-        config_to_be_written = True
-    if "downloads_folder" not in boring_gorilla:
-        boring_gorilla["downloads_folder"] = os.path.join(os.getcwd(),
-                                                          'downloads')
-        config_to_be_written = True
-    if "preserve_raw_downloads" not in boring_gorilla:
-        boring_gorilla["preserve_raw_downloads"] = "True"
-        config_to_be_written = True
-    if "ami_eod_db_folder" not in amibroker:
-        amibroker["ami_eod_db_folder"] = r'C:\Program Files\AmiBroker\Data-EOD'
-        config_to_be_written = True
-    if "ami_intraday_db_folder" not in amibroker:
-        amibroker["ami_intraday_db_folder"] = r'C:\Program Files\AmiBroker\Data-RT'
-        config_to_be_written = True
-    if "ami_installation_folder" not in amibroker:
-        amibroker["ami_installation_folder"] = r'C:\Program Files\AmiBroker'
-        config_to_be_written = True
+    for item in boring_gorilla_default_config:
+        if item not in boring_gorilla:
+            boring_gorilla[item] = boring_gorilla_default_config.get(item)
+            config_to_be_written = True
     if config_to_be_written:
         write_config(config, filename)
     return config
@@ -117,25 +110,33 @@ class PreferencesDialog(QtGui.QDialog):
         self.ami_intraday_db_folder = str
         self.ami_installation_folder = str
         self.preserve_raw_downloads = bool
+        self.config = configparser.ConfigParser
+        self.boring_gorilla = configparser.SectionProxy
         # Other Initialization stuff
         self.config_filename = 'config.ini'
-        self.config = ConfigParser()
         self.update_ui_values()
         self.map_signals_and_slots()
         logger.debug("Preferences dialog initialized.")
 
     def read_config(self):
+        """
+        Read the config from disk.
+        """
         self.config = process_config(self.config_filename)
-        self.nse_indices_folder = self.config["boring_gorilla"]["nse_indices_folder"]
-        self.nse_equities_folder = self.config["boring_gorilla"]["nse_equities_folder"]
-        self.nse_futures_folder = self.config["boring_gorilla"]["nse_futures_folder"]
-        self.downloads_folder = self.config["boring_gorilla"]["downloads_folder"]
-        self.ami_eod_db_folder = self.config["amibroker"]["ami_eod_db_folder"]
-        self.ami_intraday_db_folder = self.config["amibroker"]["ami_intraday_db_folder"]
-        self.ami_installation_folder = self.config["amibroker"]["ami_installation_folder"]
-        self.preserve_raw_downloads = self.config['boring_gorilla'].getboolean("preserve_raw_downloads")
+        self.boring_gorilla = self.config["boring_gorilla"]
+        self.nse_indices_folder = self.boring_gorilla["nse_indices_folder"]
+        self.nse_equities_folder = self.boring_gorilla["nse_equities_folder"]
+        self.nse_futures_folder = self.boring_gorilla["nse_futures_folder"]
+        self.downloads_folder = self.boring_gorilla["downloads_folder"]
+        self.ami_eod_db_folder = self.boring_gorilla["ami_eod_db_folder"]
+        self.ami_intraday_db_folder = self.boring_gorilla["ami_intraday_db_folder"]
+        self.ami_installation_folder = self.boring_gorilla["ami_installation_folder"]
+        self.preserve_raw_downloads = self.boring_gorilla.getboolean("preserve_raw_downloads")
 
     def update_ui_values(self):
+        """
+        Update the ui elements by reading the latest config from disk.
+        """
         self.read_config()
         self.ui.nse_indices_folder.setText(self.nse_indices_folder)
         self.ui.nse_equities_folder.setText(self.nse_equities_folder)
@@ -147,6 +148,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.ui.preserve_raw_downloads.setChecked(self.preserve_raw_downloads)
 
     def map_signals_and_slots(self):
+        """
+        The signals and slots for PreferencesDialog object.
+        """
         self.ui.browse_nse_indices.clicked.connect(self.browse_nse_indices)
         self.ui.browse_nse_equities.clicked.connect(self.browse_nse_equities)
         self.ui.browse_nse_futures.clicked.connect(self.browse_nse_futures)
@@ -159,6 +163,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.ui.cancel_preferences.clicked.connect(self.cancel_preferences)
 
     def get_ui_values(self):
+        """
+        Update the variables by getting latest values from ui elements.
+        """
         self.nse_indices_folder = self.ui.nse_indices_folder.text()
         self.nse_equities_folder = self.ui.nse_equities_folder.text()
         self.nse_futures_folder = self.ui.nse_futures_folder.text()
@@ -169,46 +176,77 @@ class PreferencesDialog(QtGui.QDialog):
         self.preserve_raw_downloads = self.ui.preserve_raw_downloads.isChecked()
 
     def browse_nse_indices(self):
+        """
+        Browse dialog for the processed data of NSE Indices folder.
+        """
         self.ui.nse_indices_folder.setText(browse_folder())
 
     def browse_nse_equities(self):
+        """
+        Browse dialog for the processed data of NSE Equities folder.
+        """
         self.ui.nse_equities_folder.setText(browse_folder())
 
     def browse_nse_futures(self):
+        """
+        Browse dialog for the processed data of NSE Futures folder.
+        """
         self.ui.nse_futures_folder.setText(browse_folder())
 
     def browse_downloads(self):
+        """
+        Browse dialog for the raw downloads folder.
+        """
         self.ui.downloads_folder.setText(browse_folder())
 
     def browse_ami_eod_db(self):
+        """
+        Browse dialog for AmiBroker EOD Database folder.
+        """
         self.ui.ami_eod_db_folder.setText(browse_folder())
 
     def browse_ami_intraday_db(self):
+        """
+        Browse dialog for AmiBroker Intraday Database folder.
+        """
         self.ui.ami_intraday_db_folder.setText(browse_folder())
 
     def browse_ami_installation(self):
+        """
+        Browse dialog for AmiBroker Installation folder.
+        """
         self.ui.ami_installation_folder.setText(browse_folder())
 
     def restore_default_preferences(self):
+        """
+        Restore the default preferences and write to disk.
+        """
         os.remove(self.config_filename)
         process_config(self.config_filename)
         self.update_ui_values()
-        logger.info("Preferences restored to default in {0}".format(self.config_filename))
+        logger.info("Preferences restored to default in {0}"
+                    "".format(self.config_filename))
 
     def save_preferences(self):
+        """
+        Save any unsaved preferences.
+        """
         self.get_ui_values()
-        self.config["boring_gorilla"]["nse_indices_folder"] = self.nse_indices_folder
-        self.config["boring_gorilla"]["nse_equities_folder"] = self.nse_equities_folder
-        self.config["boring_gorilla"]["nse_futures_folder"] = self.nse_futures_folder
-        self.config["boring_gorilla"]["downloads_folder"] = self.downloads_folder
-        self.config["amibroker"]["ami_eod_db_folder"] = self.ami_eod_db_folder
-        self.config["amibroker"]["ami_intraday_db_folder"] = self.ami_intraday_db_folder
-        self.config["amibroker"]["ami_installation_folder"] = self.ami_installation_folder
-        self.config['boring_gorilla']["preserve_raw_downloads"] = str(self.preserve_raw_downloads)
+        self.boring_gorilla["nse_indices_folder"] = self.nse_indices_folder
+        self.boring_gorilla["nse_equities_folder"] = self.nse_equities_folder
+        self.boring_gorilla["nse_futures_folder"] = self.nse_futures_folder
+        self.boring_gorilla["downloads_folder"] = self.downloads_folder
+        self.boring_gorilla["ami_eod_db_folder"] = self.ami_eod_db_folder
+        self.boring_gorilla["ami_intraday_db_folder"] = self.ami_intraday_db_folder
+        self.boring_gorilla["ami_installation_folder"] = self.ami_installation_folder
+        self.boring_gorilla["preserve_raw_downloads"] = str(self.preserve_raw_downloads)
         write_config(self.config, self.config_filename)
         logger.info("Preferences saved in {0}".format(self.config_filename))
 
     def cancel_preferences(self):
+        """
+        Close the Preferences dialog without saving any unsaved changes.
+        """
         self.close()
         logger.debug("Preference Dialog closed.")
 
