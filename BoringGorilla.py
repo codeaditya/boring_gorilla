@@ -7,7 +7,7 @@ import sys
 from PyQt4 import QtCore, QtGui
 
 from BoringGorilla_design import Ui_BoringGorilla
-from preferences import PreferencesDialog
+from preferences import PreferencesDialog, process_config
 from helpers import WorkerThread, GuiLogHandler
 
 import trader
@@ -47,11 +47,14 @@ class BoringGorilla(QtGui.QMainWindow):
         self.nse_equities = bool
         self.nse_futures = bool
         self.debugging = bool
+        self.config_filename = 'config.ini'
+        self.config = process_config(self.config_filename)
         # Other Initialization stuff
         self.initial_ui_changes()
         self.create_worker_threads()
         self.create_gui_log_handler()
         self.map_signals_and_slots()
+        self.read_config()
         logger.debug("UI loaded.")
 
     def initial_ui_changes(self):
@@ -99,6 +102,12 @@ class BoringGorilla(QtGui.QMainWindow):
         self.connect(self.dummy_emitter, QtCore.SIGNAL("log_msg(QString)"),
                      self.ui.log_browser.append)
         self.ui.actionPreferences.triggered.connect(self.show_preferences_dialog)
+
+    def read_config(self):
+        """
+        Read the config file.
+        """
+        self.config.read(self.config_filename)
 
     def get_ui_values(self):
         """
