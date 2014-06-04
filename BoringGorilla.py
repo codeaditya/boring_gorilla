@@ -156,16 +156,35 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.info("Downloading...")
         self.get_ui_values()
         self.log_window_state()
+        self.read_config()
         trader.DEBUGGING = self.debugging
         if self.nse_indices:
-            trader.process_nse_indices(self.start_date, self.end_date,
-                                       ignore_weekend=self.ignore_weekend)
+            trader.process_nse_indices(
+                self.start_date, self.end_date,
+                download_location=self.config.get("boring_gorilla",
+                                                  "downloads_folder"),
+                output_location=self.config.get("boring_gorilla",
+                                                "nse_indices_folder"),
+                ignore_weekend=self.ignore_weekend
+            )
         if self.nse_equities:
-            trader.process_nse_equities(self.start_date, self.end_date,
-                                        ignore_weekend=self.ignore_weekend)
+            trader.process_nse_equities(
+                self.start_date, self.end_date,
+                download_location=self.config.get("boring_gorilla",
+                                                  "downloads_folder"),
+                output_location=self.config.get("boring_gorilla",
+                                                "nse_equities_folder"),
+                ignore_weekend=self.ignore_weekend
+            )
         if self.nse_futures:
-            trader.process_nse_futures(self.start_date, self.end_date,
-                                       ignore_weekend=self.ignore_weekend)
+            trader.process_nse_futures(
+                self.start_date, self.end_date,
+                download_location=self.config.get("boring_gorilla",
+                                                  "downloads_folder"),
+                output_location=self.config.get("boring_gorilla",
+                                                "nse_futures_folder"),
+                ignore_weekend=self.ignore_weekend
+            )
         logger.info("Download finished...")
 
     def log_window_state(self):
