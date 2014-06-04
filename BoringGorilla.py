@@ -119,12 +119,12 @@ class BoringGorilla(QtGui.QMainWindow):
 
         :type status: bool
         """
-        self.ui.start_date.setDisabled(status)
-        self.ui.end_date.setDisabled(status)
-        self.ui.ignore_weekend.setDisabled(status)
-        self.ui.nse_indices.setDisabled(status)
-        self.ui.nse_equities.setDisabled(status)
+        self.ui.date_group.setDisabled(status)
+        self.ui.segment_group.setDisabled(status)
+        self.ui.debugging.setDisabled(status)
         self.ui.process_button.setDisabled(status)
+        self.ui.import_in_ami_button.setDisabled(status)
+        self.ui.generate_indices_button.setDisabled(status)
 
     def process_button_pressed(self):
         """
