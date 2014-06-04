@@ -9,6 +9,20 @@ import logging
 
 from PyQt4 import QtCore
 
+###############################################################################
+#### Add logging functionality ################################################
+FORMATTER = logging.Formatter("{asctime} - {module:15s} - {process} - "
+                              "{levelname:8s} - {message}", style="{")
+LOGGING_LEVEL = logging.DEBUG
+# logging.Logger object
+logger = logging.getLogger(__name__)
+logger.setLevel(LOGGING_LEVEL)
+# Console handler
+ch = logging.StreamHandler()
+ch.setFormatter(FORMATTER)
+logger.addHandler(ch)
+###############################################################################
+
 
 class WorkerThread(QtCore.QThread):
     """Create a QThread to run the functions in a separate Qt Thread.

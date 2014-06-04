@@ -21,6 +21,8 @@ logger = logging.getLogger("trader")
 logger.setLevel(LOGGING_LEVEL)
 logger_preferences = logging.getLogger("preferences")
 logger_preferences.setLevel(LOGGING_LEVEL)
+logger_helpers = logging.getLogger("helpers")
+logger_helpers.setLevel(LOGGING_LEVEL)
 ###############################################################################
 
 
@@ -90,6 +92,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.gui_log_handler.setFormatter(FORMATTER)
         logger.addHandler(self.gui_log_handler)
         logger_preferences.addHandler(self.gui_log_handler)
+        logger_helpers.addHandler(self.gui_log_handler)
 
     def map_signals_and_slots(self):
         """
