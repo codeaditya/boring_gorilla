@@ -29,13 +29,20 @@ base = None
 if sys.platform == 'win32':
     base = 'Win32GUI'
 
-options = {'build_exe': {'includes': 'atexit'}}
-executables = [Executable('BoringGorilla.py',
-                          base=base)]
+options = {'build_exe': dict(includes='atexit',
+                             include_files=['LICENSE.txt'])}
+executables = [Executable(script='BoringGorilla.py',
+                          initScript=None,
+                          base=base,
+                          targetName='BoringGorilla.exe',
+                          compress=True,
+                          copyDependentFiles=True,
+                          icon=None)]
 
 setup(name='BoringGorilla',
       version='0.1',
       description='Downloads and processes data for Stock Markets',
+      author='Aditya',
       options=options,
       executables=executables
       )
