@@ -41,6 +41,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.monospace_font = None
         self.trader_thread = None
         self.ami_thread = None
+        self.generate_indices_thread = None
         self.dummy_emitter = None
         self.gui_log_handler = None
         self.start_date = str
@@ -83,6 +84,7 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         self.trader_thread = WorkerThread(self.start_download, ())
         self.ami_thread = WorkerThread(self.import_in_ami, ())
+        self.generate_indices_thread = WorkerThread(self.generate_indices, ())
 
     def create_gui_log_handler(self):
         """
@@ -103,10 +105,13 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         self.ui.process_button.clicked.connect(self.process_button_pressed)
         self.ui.import_in_ami_button.clicked.connect(self.import_in_ami_pressed)
+        self.ui.generate_indices_button.clicked.connect(self.generate_indices_pressed)
         self.trader_thread.finished.connect(self.restore_ui)
         self.trader_thread.terminated.connect(self.restore_ui)
         self.ami_thread.finished.connect(self.restore_ui)
         self.ami_thread.terminated.connect(self.restore_ui)
+        self.generate_indices_thread.finished.connect(self.restore_ui)
+        self.generate_indices_thread.terminated.connect(self.restore_ui)
         self.connect(self.dummy_emitter, QtCore.SIGNAL("log_msg(QString)"),
                      self.ui.log_browser.append)
         self.ui.actionPreferences.triggered.connect(self.show_preferences_dialog)
@@ -156,6 +161,13 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         self.disable_ui_widgets(True)
         self.ami_thread.start()
+
+    def generate_indices_pressed(self):
+        """
+        Disable UI widgets and start the worker thread.
+        """
+        self.disable_ui_widgets(True)
+        self.generate_indices_thread.start()
 
     def restore_ui(self):
         """
@@ -207,7 +219,13 @@ class BoringGorilla(QtGui.QMainWindow):
         The main method for the ami_thread. Uses the COM interface to
         connect to AmiBroker and import the data therein.
         """
-        logger.info("Importing the data in AmiBroker")
+        logger.info("Importing the data in AmiBroker...")
+        self.get_ui_values()
+        self.log_window_state()
+        self.read_config()
+
+    def generate_indices(self):
+        logger.info("Generating indices...")
         self.get_ui_values()
         self.log_window_state()
         self.read_config()
