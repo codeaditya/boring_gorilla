@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui_design/BoringGorilla_design.ui'
+# Form implementation generated from reading ui file 'ui_design\BoringGorilla_design.ui'
 #
-# Created: Sat May 31 15:36:21 2014
-#      by: PyQt4 UI code generator 4.10.4
+# Created: Sat Jun 07 19:18:13 2014
+#      by: PyQt4 UI code generator 4.11
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -23,7 +23,6 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-# noinspection PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8,PyPep8
 class Ui_BoringGorilla(object):
     def setupUi(self, BoringGorilla):
         BoringGorilla.setObjectName(_fromUtf8("BoringGorilla"))
@@ -162,8 +161,11 @@ class Ui_BoringGorilla(object):
         BoringGorilla.setTabOrder(self.segment_group, self.nse_indices)
         BoringGorilla.setTabOrder(self.nse_indices, self.nse_equities)
         BoringGorilla.setTabOrder(self.nse_equities, self.nse_futures)
-        BoringGorilla.setTabOrder(self.nse_futures, self.process_button)
-        BoringGorilla.setTabOrder(self.process_button, self.exit_button)
+        BoringGorilla.setTabOrder(self.nse_futures, self.debugging)
+        BoringGorilla.setTabOrder(self.debugging, self.process_button)
+        BoringGorilla.setTabOrder(self.process_button, self.generate_indices_button)
+        BoringGorilla.setTabOrder(self.generate_indices_button, self.import_in_ami_button)
+        BoringGorilla.setTabOrder(self.import_in_ami_button, self.exit_button)
         BoringGorilla.setTabOrder(self.exit_button, self.log_browser)
 
     def retranslateUi(self, BoringGorilla):

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>750</width>
-    <height>446</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="font">
@@ -21,7 +21,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="gorilla_location_prefs">
+    <widget class="QGroupBox" name="process_location_prefs">
      <property name="title">
       <string>Storage Location</string>
      </property>
@@ -100,7 +100,7 @@
    <item row="1" column="0">
     <widget class="QGroupBox" name="ami_location_prefs">
      <property name="title">
-      <string>Amibroker Location</string>
+      <string>Amibroker Location for Import</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -154,10 +154,21 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="0" colspan="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QCheckBox" name="import_selected_nse_futures">
+          <property name="text">
+           <string>For NSE Futures - import only Near-month and Next-month Indices</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QGroupBox" name="miscellaneous_prefs">
      <property name="title">
       <string>Miscellaneous</string>
@@ -173,7 +184,7 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="restore_default_preferences">
@@ -211,8 +222,76 @@
      </item>
     </layout>
    </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="generate_indices_prefs">
+     <property name="title">
+      <string>Location to generate personal Indices files</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string>CNX Nifty Location</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="personal_nifty_index_file"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="browse_personal_nifty_index">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Nifty Futures Location</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="personal_nifty_futures_file"/>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="browse_personal_nifty_futures">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nse_indices_folder</tabstop>
+  <tabstop>browse_nse_indices</tabstop>
+  <tabstop>nse_equities_folder</tabstop>
+  <tabstop>browse_nse_equities</tabstop>
+  <tabstop>nse_futures_folder</tabstop>
+  <tabstop>browse_nse_futures</tabstop>
+  <tabstop>downloads_folder</tabstop>
+  <tabstop>browse_downloads</tabstop>
+  <tabstop>ami_eod_db_folder</tabstop>
+  <tabstop>browse_ami_eod_db</tabstop>
+  <tabstop>ami_intraday_db_folder</tabstop>
+  <tabstop>browse_ami_intraday_db</tabstop>
+  <tabstop>ami_installation_folder</tabstop>
+  <tabstop>browse_ami_installation</tabstop>
+  <tabstop>import_selected_nse_futures</tabstop>
+  <tabstop>personal_nifty_index_file</tabstop>
+  <tabstop>browse_personal_nifty_index</tabstop>
+  <tabstop>personal_nifty_futures_file</tabstop>
+  <tabstop>browse_personal_nifty_futures</tabstop>
+  <tabstop>preserve_raw_downloads</tabstop>
+  <tabstop>restore_default_preferences</tabstop>
+  <tabstop>save_preferences</tabstop>
+  <tabstop>cancel_preferences</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

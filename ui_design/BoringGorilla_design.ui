@@ -273,7 +273,10 @@
   <tabstop>nse_indices</tabstop>
   <tabstop>nse_equities</tabstop>
   <tabstop>nse_futures</tabstop>
+  <tabstop>debugging</tabstop>
   <tabstop>process_button</tabstop>
+  <tabstop>generate_indices_button</tabstop>
+  <tabstop>import_in_ami_button</tabstop>
   <tabstop>exit_button</tabstop>
   <tabstop>log_browser</tabstop>
  </tabstops>

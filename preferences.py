@@ -45,16 +45,19 @@ def process_config(filename='config.ini'):
         if section not in config:
             config[section] = {}
     boring_gorilla = config["boring_gorilla"]
-    boring_gorilla_default_config = {
-        "nse_indices_folder": os.path.join(os.getcwd(), "processed_data"),
-        "nse_equities_folder": os.path.join(os.getcwd(), "processed_data"),
-        "nse_futures_folder": os.path.join(os.getcwd(), "processed_data"),
-        "downloads_folder": os.path.join(os.getcwd(), "downloads"),
-        "preserve_raw_downloads": "True",
-        "ami_installation_folder": r'C:\Program Files\AmiBroker',
-        "ami_eod_db_folder": r'C:\Program Files\AmiBroker\Data-EOD',
-        "ami_intraday_db_folder": r'C:\Program Files\AmiBroker\Data-RT',
-    }
+    boring_gorilla_default_config = dict(
+        nse_indices_folder=os.path.join(os.getcwd(), "processed_data"),
+        nse_equities_folder=os.path.join(os.getcwd(), "processed_data"),
+        nse_futures_folder=os.path.join(os.getcwd(), "processed_data"),
+        raw_downloads_folder=os.path.join(os.getcwd(), "downloads"),
+        ami_eod_db_folder=r'C:\Program Files\AmiBroker\Data-EOD',
+        ami_intraday_db_folder=r'C:\Program Files\AmiBroker\Data-RT',
+        ami_installation_folder=r'C:\Program Files\AmiBroker',
+        import_selected_nse_futures="True",
+        personal_nifty_index_file=r'D:\Aditya\Markets\Market Data\S&PCNXNIFTY.csv',
+        personal_nifty_futures_file=r'D:\Aditya\Markets\Market Data\NIFTY-I.csv',
+        preserve_raw_downloads="True",
+    )
     config_to_be_written = False
     for item in boring_gorilla_default_config:
         if item not in boring_gorilla:
@@ -90,6 +93,18 @@ def browse_folder():
     return input_location
 
 
+def browse_file_to_save():
+    """Create a Qt File Dialog to browse and select a file to save.
+
+    :returns: the location of the file selected
+
+    :rtype: str
+    """
+    browser = QtGui.QFileDialog()
+    input_location = browser.getSaveFileName()
+    return input_location
+
+
 class PreferencesDialog(QtGui.QDialog):
     """Create a Preferences Dialog window.
 
@@ -109,6 +124,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.ami_eod_db_folder = str
         self.ami_intraday_db_folder = str
         self.ami_installation_folder = str
+        self.import_selected_nse_futures = bool
+        self.personal_nifty_index_file = str
+        self.personal_nifty_futures_file = str
         self.preserve_raw_downloads = bool
         self.config = configparser.ConfigParser
         self.boring_gorilla = configparser.SectionProxy
@@ -127,10 +145,13 @@ class PreferencesDialog(QtGui.QDialog):
         self.nse_indices_folder = self.boring_gorilla["nse_indices_folder"]
         self.nse_equities_folder = self.boring_gorilla["nse_equities_folder"]
         self.nse_futures_folder = self.boring_gorilla["nse_futures_folder"]
-        self.downloads_folder = self.boring_gorilla["downloads_folder"]
+        self.downloads_folder = self.boring_gorilla["raw_downloads_folder"]
         self.ami_eod_db_folder = self.boring_gorilla["ami_eod_db_folder"]
         self.ami_intraday_db_folder = self.boring_gorilla["ami_intraday_db_folder"]
         self.ami_installation_folder = self.boring_gorilla["ami_installation_folder"]
+        self.import_selected_nse_futures = self.boring_gorilla.getboolean("import_selected_nse_futures")
+        self.personal_nifty_index_file = self.boring_gorilla["personal_nifty_index_file"]
+        self.personal_nifty_futures_file = self.boring_gorilla["personal_nifty_futures_file"]
         self.preserve_raw_downloads = self.boring_gorilla.getboolean("preserve_raw_downloads")
 
     def update_ui_values(self):
@@ -145,6 +166,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.ui.ami_eod_db_folder.setText(self.ami_eod_db_folder)
         self.ui.ami_intraday_db_folder.setText(self.ami_intraday_db_folder)
         self.ui.ami_installation_folder.setText(self.ami_installation_folder)
+        self.ui.import_selected_nse_futures.setChecked(self.import_selected_nse_futures)
+        self.ui.personal_nifty_index_file.setText(self.personal_nifty_index_file)
+        self.ui.personal_nifty_futures_file.setText(self.personal_nifty_futures_file)
         self.ui.preserve_raw_downloads.setChecked(self.preserve_raw_downloads)
 
     def map_signals_and_slots(self):
@@ -158,6 +182,8 @@ class PreferencesDialog(QtGui.QDialog):
         self.ui.browse_ami_eod_db.clicked.connect(self.browse_ami_eod_db)
         self.ui.browse_ami_intraday_db.clicked.connect(self.browse_ami_intraday_db)
         self.ui.browse_ami_installation.clicked.connect(self.browse_ami_installation)
+        self.ui.browse_personal_nifty_index.clicked.connect(self.browse_personal_nifty_index)
+        self.ui.browse_personal_nifty_futures.clicked.connect(self.browse_personal_nifty_futures)
         self.ui.restore_default_preferences.clicked.connect(self.restore_default_preferences)
         self.ui.save_preferences.clicked.connect(self.save_preferences)
         self.ui.cancel_preferences.clicked.connect(self.cancel_preferences)
@@ -173,6 +199,9 @@ class PreferencesDialog(QtGui.QDialog):
         self.ami_eod_db_folder = self.ui.ami_eod_db_folder.text()
         self.ami_intraday_db_folder = self.ui.ami_intraday_db_folder.text()
         self.ami_installation_folder = self.ui.ami_installation_folder.text()
+        self.import_selected_nse_futures = self.ui.import_selected_nse_futures.isChecked()
+        self.personal_nifty_index_file = self.ui.personal_nifty_index_file.text()
+        self.personal_nifty_futures_file = self.ui.personal_nifty_futures_file.text()
         self.preserve_raw_downloads = self.ui.preserve_raw_downloads.isChecked()
 
     def browse_nse_indices(self):
@@ -217,6 +246,18 @@ class PreferencesDialog(QtGui.QDialog):
         """
         self.ui.ami_installation_folder.setText(browse_folder())
 
+    def browse_personal_nifty_index(self):
+        """
+        Browse dialog for personal Nifty Index file to be generated.
+        """
+        self.ui.personal_nifty_index_file.setText(browse_file_to_save())
+
+    def browse_personal_nifty_futures(self):
+        """
+        Browse dialog for personal Nifty Futures file to be generated.
+        """
+        self.ui.personal_nifty_futures_file.setText(browse_file_to_save())
+
     def restore_default_preferences(self):
         """
         Restore the default preferences and write to disk.
@@ -235,10 +276,13 @@ class PreferencesDialog(QtGui.QDialog):
         self.boring_gorilla["nse_indices_folder"] = self.nse_indices_folder
         self.boring_gorilla["nse_equities_folder"] = self.nse_equities_folder
         self.boring_gorilla["nse_futures_folder"] = self.nse_futures_folder
-        self.boring_gorilla["downloads_folder"] = self.downloads_folder
+        self.boring_gorilla["raw_downloads_folder"] = self.downloads_folder
         self.boring_gorilla["ami_eod_db_folder"] = self.ami_eod_db_folder
         self.boring_gorilla["ami_intraday_db_folder"] = self.ami_intraday_db_folder
         self.boring_gorilla["ami_installation_folder"] = self.ami_installation_folder
+        self.boring_gorilla["import_selected_nse_futures"] = str(self.import_selected_nse_futures)
+        self.boring_gorilla["personal_nifty_index_file"] = self.personal_nifty_index_file
+        self.boring_gorilla["personal_nifty_futures_file"] = self.personal_nifty_futures_file
         self.boring_gorilla["preserve_raw_downloads"] = str(self.preserve_raw_downloads)
         write_config(self.config, self.config_filename)
         logger.info("Preferences saved in {0}".format(self.config_filename))
