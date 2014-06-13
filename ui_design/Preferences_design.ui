@@ -80,7 +80,7 @@
       <item row="3" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Raw Downloads</string>
+         <string>Downloads</string>
         </property>
        </widget>
       </item>
@@ -175,9 +175,9 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <widget class="QCheckBox" name="preserve_raw_downloads">
+       <widget class="QCheckBox" name="preserve_downloads">
         <property name="text">
-         <string>Preserve Raw Downloads</string>
+         <string>Preserve Downloads</string>
         </property>
        </widget>
       </item>
@@ -287,7 +287,7 @@
   <tabstop>browse_personal_nifty_index</tabstop>
   <tabstop>personal_nifty_futures_file</tabstop>
   <tabstop>browse_personal_nifty_futures</tabstop>
-  <tabstop>preserve_raw_downloads</tabstop>
+  <tabstop>preserve_downloads</tabstop>
   <tabstop>restore_default_preferences</tabstop>
   <tabstop>save_preferences</tabstop>
   <tabstop>cancel_preferences</tabstop>

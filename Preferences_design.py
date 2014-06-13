@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_design\Preferences_design.ui'
 #
-# Created: Sat Jun 07 19:18:13 2014
+# Created: Fri Jun 13 14:50:20 2014
 #      by: PyQt4 UI code generator 4.11
 #
 # WARNING! All changes made in this file will be lost!
@@ -116,9 +116,9 @@ class Ui_GorillaPreferences(object):
         self.miscellaneous_prefs.setObjectName(_fromUtf8("miscellaneous_prefs"))
         self.gridLayout_3 = QtGui.QGridLayout(self.miscellaneous_prefs)
         self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        self.preserve_raw_downloads = QtGui.QCheckBox(self.miscellaneous_prefs)
-        self.preserve_raw_downloads.setObjectName(_fromUtf8("preserve_raw_downloads"))
-        self.gridLayout_3.addWidget(self.preserve_raw_downloads, 0, 0, 1, 1)
+        self.preserve_downloads = QtGui.QCheckBox(self.miscellaneous_prefs)
+        self.preserve_downloads.setObjectName(_fromUtf8("preserve_downloads"))
+        self.gridLayout_3.addWidget(self.preserve_downloads, 0, 0, 1, 1)
         self.gridLayout_4.addWidget(self.miscellaneous_prefs, 3, 0, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
@@ -178,8 +178,8 @@ class Ui_GorillaPreferences(object):
         GorillaPreferences.setTabOrder(self.personal_nifty_index_file, self.browse_personal_nifty_index)
         GorillaPreferences.setTabOrder(self.browse_personal_nifty_index, self.personal_nifty_futures_file)
         GorillaPreferences.setTabOrder(self.personal_nifty_futures_file, self.browse_personal_nifty_futures)
-        GorillaPreferences.setTabOrder(self.browse_personal_nifty_futures, self.preserve_raw_downloads)
-        GorillaPreferences.setTabOrder(self.preserve_raw_downloads, self.restore_default_preferences)
+        GorillaPreferences.setTabOrder(self.browse_personal_nifty_futures, self.preserve_downloads)
+        GorillaPreferences.setTabOrder(self.preserve_downloads, self.restore_default_preferences)
         GorillaPreferences.setTabOrder(self.restore_default_preferences, self.save_preferences)
         GorillaPreferences.setTabOrder(self.save_preferences, self.cancel_preferences)
 
@@ -192,7 +192,7 @@ class Ui_GorillaPreferences(object):
         self.browse_nse_equities.setText(_translate("GorillaPreferences", "Browse...", None))
         self.label_3.setText(_translate("GorillaPreferences", "NSE Futures", None))
         self.browse_nse_futures.setText(_translate("GorillaPreferences", "Browse...", None))
-        self.label_4.setText(_translate("GorillaPreferences", "Raw Downloads", None))
+        self.label_4.setText(_translate("GorillaPreferences", "Downloads", None))
         self.browse_downloads.setText(_translate("GorillaPreferences", "Browse...", None))
         self.ami_location_prefs.setTitle(_translate("GorillaPreferences", "Amibroker Location for Import", None))
         self.label_5.setText(_translate("GorillaPreferences", "EOD Database", None))
@@ -203,7 +203,7 @@ class Ui_GorillaPreferences(object):
         self.browse_ami_installation.setText(_translate("GorillaPreferences", "Browse...", None))
         self.import_selected_nse_futures.setText(_translate("GorillaPreferences", "For NSE Futures - import only Near-month and Next-month Indices", None))
         self.miscellaneous_prefs.setTitle(_translate("GorillaPreferences", "Miscellaneous", None))
-        self.preserve_raw_downloads.setText(_translate("GorillaPreferences", "Preserve Raw Downloads", None))
+        self.preserve_downloads.setText(_translate("GorillaPreferences", "Preserve Downloads", None))
         self.restore_default_preferences.setText(_translate("GorillaPreferences", "Restore Defaults", None))
         self.save_preferences.setText(_translate("GorillaPreferences", "Save Preferences", None))
         self.cancel_preferences.setText(_translate("GorillaPreferences", "Cancel", None))

@@ -189,7 +189,7 @@ class BoringGorilla(QtGui.QMainWindow):
             trader.process_nse_indices(
                 self.start_date, self.end_date,
                 download_location=self.config.get("boring_gorilla",
-                                                  "raw_downloads_folder"),
+                                                  "downloads_folder"),
                 output_location=self.config.get("boring_gorilla",
                                                 "nse_indices_folder"),
                 ignore_weekend=self.ignore_weekend
@@ -198,7 +198,7 @@ class BoringGorilla(QtGui.QMainWindow):
             trader.process_nse_equities(
                 self.start_date, self.end_date,
                 download_location=self.config.get("boring_gorilla",
-                                                  "raw_downloads_folder"),
+                                                  "downloads_folder"),
                 output_location=self.config.get("boring_gorilla",
                                                 "nse_equities_folder"),
                 ignore_weekend=self.ignore_weekend
@@ -207,7 +207,7 @@ class BoringGorilla(QtGui.QMainWindow):
             trader.process_nse_futures(
                 self.start_date, self.end_date,
                 download_location=self.config.get("boring_gorilla",
-                                                  "raw_downloads_folder"),
+                                                  "downloads_folder"),
                 output_location=self.config.get("boring_gorilla",
                                                 "nse_futures_folder"),
                 ignore_weekend=self.ignore_weekend

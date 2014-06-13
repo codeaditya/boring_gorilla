@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_design\BoringGorilla_design.ui'
 #
-# Created: Sat Jun 07 19:18:13 2014
+# Created: Fri Jun 13 14:50:19 2014
 #      by: PyQt4 UI code generator 4.11
 #
 # WARNING! All changes made in this file will be lost!
