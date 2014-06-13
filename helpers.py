@@ -6,6 +6,7 @@ Provides helper classes and functions for BoringGorilla.
 
 """
 import logging
+import os.path
 
 from PyQt4 import QtCore
 
@@ -22,6 +23,47 @@ ch = logging.StreamHandler()
 ch.setFormatter(FORMATTER)
 logger.addHandler(ch)
 ###############################################################################
+
+COMTYPES_AVAILABLE = False
+try:
+    import comtypes
+    import comtypes.client
+    logger.debug("cometypes module available.")
+    COMTYPES_AVAILABLE = True
+except ImportError:
+    logger.debug("comtypes module not available.")
+
+
+def import_data_in_amibroker(database_path, import_file_list, import_format,
+                             amibroker_visibility=False):
+    """Import the data in Amibroker.
+
+    :param database_path: location of the database folder of AmiBroker
+    :param import_file_list: data files to be imported in AmiBroker
+    :param import_format: format definition file for AmiBroker
+
+    :type database_path: str
+    :type import_file_list: list of str
+    :type import_format: str
+    """
+    if COMTYPES_AVAILABLE:
+        logger.debug("Starting import.")
+        comtypes.CoInitializeEx()
+        ami = comtypes.client.CreateObject("Broker.Application")
+        ami.Visible = amibroker_visibility
+        ami.LoadDatabase(database_path)
+        for import_file in import_file_list:
+            filename = os.path.basename(import_file)
+            logger.info("Importing: {0}".format(filename))
+            ami.Import(0, import_file, import_format)
+        ami.RefreshAll()
+        ami.SaveDataBase()
+        ami.Quit()
+        logger.debug("Data imported in AmiBroker Database: {0}"
+                     "".format(database_path))
+    else:
+        logger.warning("Data cannot be imported in AmiBroker since comtypes "
+                       "module is not available.")
 
 
 class WorkerThread(QtCore.QThread):
