@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import datetime
 import logging
 import sys
 
@@ -44,21 +45,36 @@ class BoringGorilla(QtGui.QMainWindow):
         self.generate_indices_thread = None
         self.dummy_emitter = None
         self.gui_log_handler = None
-        self.start_date = str
-        self.end_date = str
+        self.start_date = datetime.datetime
+        self.end_date = datetime.datetime
+        self.current_date = datetime.datetime
+        self.time_delta = datetime.timedelta(days=1)
         self.ignore_weekend = bool
         self.nse_indices = bool
         self.nse_equities = bool
         self.nse_futures = bool
         self.debugging = bool
+        # Config properties updated after reading the config file
+        self.gorilla_config = object
+        self.nse_indices_folder = str
+        self.nse_equities_folder = str
+        self.nse_futures_folder = str
+        self.downloads_folder = str
+        self.ami_eod_db_folder = str
+        self.ami_intraday_db_folder = str
+        self.ami_installation_folder = str
+        self.import_selected_nse_futures = bool
+        self.personal_nifty_index_file = str
+        self.personal_nifty_futures_file = str
+        self.preserve_downloads = bool
+        # Other Initialization stuff
         self.config_filename = 'config.ini'
         self.config = process_config(self.config_filename)
-        # Other Initialization stuff
         self.initial_ui_changes()
         self.create_worker_threads()
         self.create_gui_log_handler()
         self.map_signals_and_slots()
-        self.read_config()
+        self.get_config_values()
         logger.debug("UI loaded.")
 
     def initial_ui_changes(self):
@@ -122,12 +138,28 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         self.config.read(self.config_filename)
 
+    def get_config_values(self):
+        self.read_config()
+        self.gorilla_config = self.config["boring_gorilla"]
+        self.nse_indices_folder = self.gorilla_config.get("nse_indices_folder")
+        self.nse_equities_folder = self.gorilla_config.get("nse_equities_folder")
+        self.nse_futures_folder = self.gorilla_config.get("nse_futures_folder")
+        self.downloads_folder = self.gorilla_config.get("downloads_folder")
+        self.ami_eod_db_folder = self.gorilla_config.get("ami_eod_db_folder")
+        self.ami_intraday_db_folder = self.gorilla_config.get("ami_intraday_db_folder")
+        self.ami_installation_folder = self.gorilla_config.get("ami_installation_folder")
+        self.import_selected_nse_futures = self.gorilla_config.getboolean("import_selected_nse_futures")
+        self.personal_nifty_index_file = self.gorilla_config.get("personal_nifty_index_file")
+        self.personal_nifty_futures_file = self.gorilla_config.get("personal_nifty_futures_file")
+        self.preserve_downloads = self.gorilla_config.getboolean("preserve_downloads")
+
     def get_ui_values(self):
         """
         Update properties to the latest values in UI.
         """
         self.start_date = self.ui.start_date.dateTime().toPyDateTime()
         self.end_date = self.ui.end_date.dateTime().toPyDateTime()
+        self.current_date = self.start_date
         self.ignore_weekend = self.ui.ignore_weekend.isChecked()
         self.nse_indices = self.ui.nse_indices.isChecked()
         self.nse_equities = self.ui.nse_equities.isChecked()
@@ -183,33 +215,27 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.info("Downloading...")
         self.get_ui_values()
         self.log_window_state()
-        self.read_config()
+        self.get_config_values()
         trader.DEBUGGING = self.debugging
         if self.nse_indices:
             trader.process_nse_indices(
                 self.start_date, self.end_date,
-                download_location=self.config.get("boring_gorilla",
-                                                  "downloads_folder"),
-                output_location=self.config.get("boring_gorilla",
-                                                "nse_indices_folder"),
+                download_location=self.downloads_folder,
+                output_location=self.nse_indices_folder,
                 ignore_weekend=self.ignore_weekend
             )
         if self.nse_equities:
             trader.process_nse_equities(
                 self.start_date, self.end_date,
-                download_location=self.config.get("boring_gorilla",
-                                                  "downloads_folder"),
-                output_location=self.config.get("boring_gorilla",
-                                                "nse_equities_folder"),
+                download_location=self.downloads_folder,
+                output_location=self.nse_equities_folder,
                 ignore_weekend=self.ignore_weekend
             )
         if self.nse_futures:
             trader.process_nse_futures(
                 self.start_date, self.end_date,
-                download_location=self.config.get("boring_gorilla",
-                                                  "downloads_folder"),
-                output_location=self.config.get("boring_gorilla",
-                                                "nse_futures_folder"),
+                download_location=self.downloads_folder,
+                output_location=self.nse_futures_folder,
                 ignore_weekend=self.ignore_weekend
             )
         logger.info("Download finished...")
@@ -222,13 +248,13 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.info("Importing the data in AmiBroker...")
         self.get_ui_values()
         self.log_window_state()
-        self.read_config()
+        self.get_config_values()
 
     def generate_indices(self):
         logger.info("Generating indices...")
         self.get_ui_values()
         self.log_window_state()
-        self.read_config()
+        self.get_config_values()
 
     def log_window_state(self):
         """
