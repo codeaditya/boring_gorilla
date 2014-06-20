@@ -24,6 +24,7 @@ ch.setFormatter(FORMATTER)
 logger.addHandler(ch)
 ###############################################################################
 
+DEBUGGING = False
 COMTYPES_AVAILABLE = False
 try:
     import comtypes
@@ -48,17 +49,20 @@ def import_data_in_amibroker(database_path, import_file_list, import_format,
     """
     if COMTYPES_AVAILABLE:
         logger.debug("Starting import.")
-        comtypes.CoInitializeEx()
-        ami = comtypes.client.CreateObject("Broker.Application")
-        ami.Visible = amibroker_visibility
-        ami.LoadDatabase(database_path)
+        if not DEBUGGING:
+            comtypes.CoInitializeEx()
+            ami = comtypes.client.CreateObject("Broker.Application")
+            ami.Visible = amibroker_visibility
+            ami.LoadDatabase(database_path)
         for import_file in import_file_list:
             filename = os.path.basename(import_file)
             logger.info("Importing: {0}".format(filename))
-            ami.Import(0, import_file, import_format)
-        ami.RefreshAll()
-        ami.SaveDataBase()
-        ami.Quit()
+            if not DEBUGGING:
+                ami.Import(0, import_file, import_format)
+        if not DEBUGGING:
+            ami.RefreshAll()
+            ami.SaveDataBase()
+            ami.Quit()
         logger.debug("Data imported in AmiBroker Database: {0}"
                      "".format(database_path))
     else:
