@@ -9,7 +9,7 @@ from PyQt4 import QtCore, QtGui
 
 from BoringGorilla_design import Ui_BoringGorilla
 from preferences import PreferencesDialog, process_config
-from helpers import WorkerThread, GuiLogHandler
+import helpers
 
 import trader
 
@@ -98,9 +98,10 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         Create the worker threads for time-consuming functions.
         """
-        self.trader_thread = WorkerThread(self.start_download, ())
-        self.ami_thread = WorkerThread(self.import_in_ami, ())
-        self.generate_indices_thread = WorkerThread(self.generate_indices, ())
+        self.trader_thread = helpers.WorkerThread(self.start_download, ())
+        self.ami_thread = helpers.WorkerThread(self.import_in_ami, ())
+        self.generate_indices_thread = helpers.WorkerThread(
+            self.generate_indices, ())
 
     def create_gui_log_handler(self):
         """
@@ -108,7 +109,7 @@ class BoringGorilla(QtGui.QMainWindow):
         log messages in realtime.
         """
         self.dummy_emitter = QtCore.QObject()
-        self.gui_log_handler = GuiLogHandler(self.dummy_emitter)
+        self.gui_log_handler = helpers.GuiLogHandler(self.dummy_emitter)
         self.gui_log_handler.setFormatter(FORMATTER)
         logger.addHandler(self.gui_log_handler)
         logger_preferences.addHandler(self.gui_log_handler)
