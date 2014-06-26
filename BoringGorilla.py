@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import csv
 import datetime
 import logging
+import os.path
 import sys
 
 from PyQt4 import QtCore, QtGui
@@ -54,6 +56,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.nse_equities = bool
         self.nse_futures = bool
         self.debugging = bool
+        self.file_location = str
         # Config properties updated after reading the config file
         self.gorilla_config = object
         self.nse_indices_folder = str
@@ -68,6 +71,12 @@ class BoringGorilla(QtGui.QMainWindow):
         self.personal_nifty_futures_file = str
         self.preserve_downloads = bool
         # Other Initialization stuff
+        self.ami_import_file_list = []
+        self.nse_futures_file_list = []
+        self.output_data = []
+        self.selected_nse_futures_data = []
+        self.selected_nse_futures_scrips = []
+        self.ami_import_format_eod = "boring_gorilla_eod.format"
         self.config_filename = 'config.ini'
         self.config = process_config(self.config_filename)
         self.initial_ui_changes()
@@ -250,6 +259,180 @@ class BoringGorilla(QtGui.QMainWindow):
         self.get_ui_values()
         self.log_window_state()
         self.get_config_values()
+        self.get_ami_import_file_list()
+        helpers.DEBUGGING = self.debugging
+        if not self.ami_import_file_list:
+            logger.warning("Nothing to import.")
+        else:
+            helpers.import_data_in_amibroker(
+                database_path=self.ami_eod_db_folder,
+                import_file_list=self.ami_import_file_list,
+                import_format=self.ami_import_format_eod,
+                amibroker_visibility=True
+            )
+            if os.path.exists("selected_nse_futures.csv"):
+                os.remove("selected_nse_futures.csv")
+        logger.info("Import finished...")
+
+    def get_ami_import_file_list(self):
+        """
+        Returns a list of file paths to be imported in Amibroker.
+        """
+        self.get_ui_values()
+        self.get_config_values()
+        self.ami_import_file_list = []
+        self.nse_futures_file_list = []
+        if self.nse_indices:
+            self.loop_through_dates_to(self.get_output_file_for_nse_indices)
+        if self.nse_equities:
+            self.loop_through_dates_to(self.get_output_file_for_nse_equities)
+        if self.nse_futures:
+            self.loop_through_dates_to(self.get_output_file_for_nse_futures)
+            if not self.import_selected_nse_futures:
+                logger.info("Complete import of NSE Futures data.")
+            else:
+                logger.info("Selected import of NSE Futures data.")
+                self.create_selected_nse_futures_file()
+        return self.ami_import_file_list
+
+    def loop_through_dates_to(self, function):
+        """
+        Loops through start_date to end_date and calls the function
+        given as argument for each date.
+
+        :param function: the function/method to be called for each date
+        """
+        self.current_date = self.start_date
+        while self.current_date <= self.end_date:
+            function()
+            self.current_date += self.time_delta
+        self.current_date = self.start_date
+
+    def get_output_file_for_nse_indices(self):
+        """
+        Generates the file name for current date for NSE Indices and
+        appends its location to self.ami_import_file_list if the file
+        exists.
+        """
+        file = 'NSE-Indices-{date}.csv'.format(
+            date=self.current_date.strftime('%Y-%m-%d'))
+        self.file_location = os.path.join(self.nse_indices_folder, file)
+        self.append_file_location_to_list(self.ami_import_file_list)
+
+    def get_output_file_for_nse_equities(self):
+        """
+        Generates the file name for current date for NSE Equities and
+        appends its location to self.ami_import_file_list if the file
+        exists.
+        """
+        file = 'NSE-Equities-{date}.csv'.format(
+            date=self.current_date.strftime('%Y-%m-%d'))
+        self.file_location = os.path.join(self.nse_equities_folder, file)
+        self.append_file_location_to_list(self.ami_import_file_list)
+
+    def get_output_file_for_nse_futures(self):
+        """
+        Generates the file name for current date for NSE Futures and
+        appends its location to self.ami_import_file_list if the file
+        exists.
+        """
+        file = 'NSE-Futures-{date}.csv'.format(
+            date=self.current_date.strftime('%Y-%m-%d'))
+        self.file_location = os.path.join(self.nse_futures_folder, file)
+        if self.import_selected_nse_futures:
+            file_list = self.nse_futures_file_list
+        else:
+            file_list = self.ami_import_file_list
+        self.append_file_location_to_list(file_list)
+
+    def append_file_location_to_list(self, file_list):
+        """
+        Appends the file_location to list if the file exists on disk.
+
+        :param file_list: the list to which files should be appended
+        :type file_list: list
+        """
+        if os.path.exists(self.file_location):
+            file_list.append(self.file_location)
+
+    def create_selected_nse_futures_file(self):
+        """
+        Reads the csv files for NSE Futures, filters the data for
+        selected scrips, writes it to a single file in present working
+        directory as 'selected_nse_futures.csv' and appends this file to
+        the list of files to be imported in Amibroker.
+        """
+        self.read_csv_files_as_list(self.nse_futures_file_list)
+        self.generate_selected_nse_futures_data()
+        self.file_location = os.path.join(os.getcwd(),
+                                          "selected_nse_futures.csv")
+        self.write_selected_nse_futures_data()
+        self.append_file_location_to_list(self.ami_import_file_list)
+
+    def generate_selected_nse_futures_data(self):
+        """
+        Filters the data for selected NSE Futures scrips and returns it
+        as a list.
+
+        :return: data for selected NSE Futures scrips
+        :rtype: list
+        """
+        self.get_selected_nse_futures_scrips()
+        self.selected_nse_futures_data = []
+        for r in self.output_data:
+            if r[0] == 'NIFTY-I':
+                line = ('ADINIFTY-1', r[1], r[2], r[3], r[4], r[5], '0', '0')
+                self.selected_nse_futures_data.append(line)
+            if r[0] in self.selected_nse_futures_scrips:
+                self.selected_nse_futures_data.append(r)
+        return self.selected_nse_futures_data
+
+    def write_selected_nse_futures_data(self):
+        """
+        Writes the data for selected NSE Futures scrips in a single file.
+        """
+        header = 'Symbol', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume', \
+                 'OI'
+        if self.selected_nse_futures_data:
+            with open(self.file_location, 'w', newline='') as new:
+                csv.writer(new, delimiter=',').writerow(header)
+                csv.writer(new, delimiter=',').writerows(
+                    self.selected_nse_futures_data)
+
+    def get_selected_nse_futures_scrips(self):
+        """
+        Creates a list of selected NSE Futures scrips and returns it.
+        The selected scrips are Future Indices and VIX for Near-month
+        and Next-month contracts.
+
+        :returns: selection of Nse Futures scrips
+        :rtype: list
+        """
+        self.selected_nse_futures_scrips = []
+        scrips = ['BANKNIFTY', 'CNXINFRA', 'CNXIT', 'CNXPSE', 'DJIA',
+                  'FTSE100', 'MINIFTY', 'NFTYMCAP50', 'NIFTY', 'S&P500',
+                  'INDIAVIX']
+        months = ['-I', '-II']
+        for scrip in scrips:
+            for month in months:
+                self.selected_nse_futures_scrips.append(scrip + month)
+        return self.selected_nse_futures_scrips
+
+    def read_csv_files_as_list(self, file_list):
+        """
+        Takes a list of files, reads them and returns it as a list.
+
+        :param file_list: list of csv files to be read
+        :type file_list: list
+
+        :returns: data read from all the csv files
+        :rtype: list
+        """
+        self.output_data = []
+        for file in file_list:
+            with open(file, 'r') as data_file:
+                self.output_data += list(csv.reader(data_file, delimiter=','))
+        return self.output_data
 
     def generate_indices(self):
         logger.info("Generating indices...")
