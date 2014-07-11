@@ -62,7 +62,6 @@ def import_data_in_amibroker(database_path, import_file_list, import_format,
         if not DEBUGGING:
             ami.RefreshAll()
             ami.SaveDataBase()
-            ami.Quit()
         logger.debug("Data imported in AmiBroker Database: {0}"
                      "".format(database_path))
     else:
