@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_design\BoringGorilla_design.ui'
 #
-# Created: Fri Jun 13 14:50:19 2014
+# Created: Sat Jul 12 01:34:12 2014
 #      by: PyQt4 UI code generator 4.11
 #
 # WARNING! All changes made in this file will be lost!
@@ -78,12 +78,15 @@ class Ui_BoringGorilla(object):
         self.gridLayout_2 = QtGui.QGridLayout(self.segment_group)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
         self.nse_indices = QtGui.QCheckBox(self.segment_group)
+        self.nse_indices.setChecked(True)
         self.nse_indices.setObjectName(_fromUtf8("nse_indices"))
         self.gridLayout_2.addWidget(self.nse_indices, 0, 0, 1, 1)
         self.nse_equities = QtGui.QCheckBox(self.segment_group)
+        self.nse_equities.setChecked(True)
         self.nse_equities.setObjectName(_fromUtf8("nse_equities"))
         self.gridLayout_2.addWidget(self.nse_equities, 1, 0, 1, 1)
         self.nse_futures = QtGui.QCheckBox(self.segment_group)
+        self.nse_futures.setChecked(True)
         self.nse_futures.setObjectName(_fromUtf8("nse_futures"))
         self.gridLayout_2.addWidget(self.nse_futures, 2, 0, 1, 1)
         self.gridLayout_5.addWidget(self.segment_group, 0, 1, 1, 1)
