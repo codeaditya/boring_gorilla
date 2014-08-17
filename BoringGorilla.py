@@ -435,10 +435,55 @@ class BoringGorilla(QtGui.QMainWindow):
         return self.output_data
 
     def generate_indices(self):
-        logger.info("Generating indices...")
+        """
+        Appends the data for the selected period for NSE Indices in the
+        files provided as preference for personal indices files.
+        """
+        logger.debug("Generating indices...")
         self.get_ui_values()
         self.log_window_state()
         self.get_config_values()
+        if self.nse_indices:
+            self.generate_nifty_spot_data()
+        if self.nse_futures:
+            self.generate_nifty_futures_data()
+        logger.info("Generated data for indices...")
+
+    def generate_nifty_spot_data(self):
+        """
+        Appends the data for the selected period for Nifty Spot in the
+        file provided as CNX Nifty Index File preference.
+        """
+        self.file_list = []
+        processed_data = []
+        self.loop_through_dates_to(self.get_output_file_for_nse_indices)
+        self.read_csv_files_as_list(self.file_list)
+        for r in self.output_data:
+            if r[0] == "CNXNIFTY":
+                line = (','.join(r[0:6])).replace('-', '').split(',')
+                processed_data.append(line)
+        append_data_to_file(processed_data,
+                            self.personal_nifty_index_file)
+        logger.info("Generated data for Nifty Spot...")
+
+    def generate_nifty_futures_data(self):
+        """
+        Appends the data for the selected period for Nifty Futures in
+        the file provided as Nifty Futures Index File preference.
+        """
+        self.import_selected_nse_futures = False
+        self.file_list = []
+        processed_data = []
+        self.loop_through_dates_to(self.get_output_file_for_nse_futures)
+        self.read_csv_files_as_list(self.file_list)
+        for r in self.output_data:
+            if r[0] == "NIFTY-I":
+                line = (','.join(r[0:6])).replace('-', '').replace(
+                    'NIFTYI', 'ADINIFTY-1').split(',')
+                processed_data.append(line)
+        append_data_to_file(processed_data,
+                            self.personal_nifty_futures_file)
+        logger.info("Generated data for Nifty Futures...")
 
     def log_window_state(self):
         """
@@ -459,6 +504,20 @@ class BoringGorilla(QtGui.QMainWindow):
         logger.info("Opening the Preferences dialog.")
         preferences_dialog = PreferencesDialog(parent=self)
         preferences_dialog.show()
+
+
+def append_data_to_file(data, file):
+    """
+    Open the file in append mode and write data to it.
+
+    :param data: the data to be written
+    :param file: the file to which to write
+
+    :type data: list or tuple
+    :type file: str
+    """
+    with open(file, 'a', newline='') as new:
+        csv.writer(new, delimiter=',').writerows(data)
 
 
 if __name__ == "__main__":
