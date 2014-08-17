@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>560</height>
+    <width>720</width>
+    <height>405</height>
    </rect>
   </property>
   <property name="font">
@@ -19,172 +19,260 @@
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_4">
+  <layout class="QGridLayout" name="gridLayout_7">
    <item row="0" column="0">
-    <widget class="QGroupBox" name="process_location_prefs">
-     <property name="title">
-      <string>Storage Location</string>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>NSE Indices</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="nse_indices_folder"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="browse_nse_indices">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>NSE Equities</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="nse_equities_folder"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="browse_nse_equities">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>NSE Futures</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="nse_futures_folder"/>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="browse_nse_futures">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Downloads</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="downloads_folder"/>
-      </item>
-      <item row="3" column="2">
-       <widget class="QPushButton" name="browse_downloads">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Process Bhavcopy</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QFrame" name="process_location_prefs">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>NSE Indices</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="nse_indices_folder"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="browse_nse_indices">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>NSE Equities</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="nse_equities_folder"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="browse_nse_equities">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>NSE Futures</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="nse_futures_folder"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="browse_nse_futures">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Downloads</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="downloads_folder"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QPushButton" name="browse_downloads">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="preserve_downloads">
+         <property name="text">
+          <string>Preserve Downloads</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Amibroker Import</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QFrame" name="ami_location_prefs">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>EOD Database</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="ami_eod_db_folder"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="browse_ami_eod_db">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Intraday Database</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="ami_intraday_db_folder"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="browse_ami_intraday_db">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Ami Installation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="ami_installation_folder"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="browse_ami_installation">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="import_selected_nse_futures">
+         <property name="text">
+          <string>For NSE Futures - import only Near-month and Next-month Indices</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>41</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Generate Personal Indices</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QFrame" name="generate_indices_prefs">
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Nifty Spot Location</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="personal_nifty_index_file"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QPushButton" name="browse_personal_nifty_index">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Nifty Futures Location</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="personal_nifty_futures_file"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QPushButton" name="browse_personal_nifty_futures">
+            <property name="text">
+             <string>Browse...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>103</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGroupBox" name="ami_location_prefs">
-     <property name="title">
-      <string>Amibroker Location for Import</string>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="text">
-         <string>EOD Database</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="ami_eod_db_folder"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="browse_ami_eod_db">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Intraday Database</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="ami_intraday_db_folder"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="browse_ami_intraday_db">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Ami Installation</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="ami_installation_folder"/>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="browse_ami_installation">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QCheckBox" name="import_selected_nse_futures">
-          <property name="text">
-           <string>For NSE Futures - import only Near-month and Next-month Indices</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QGroupBox" name="miscellaneous_prefs">
-     <property name="title">
-      <string>Miscellaneous</string>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>103</height>
+      </size>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="preserve_downloads">
-        <property name="text">
-         <string>Preserve Downloads</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
+    </spacer>
    </item>
-   <item row="4" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="restore_default_preferences">
@@ -209,7 +297,10 @@
      <item>
       <widget class="QPushButton" name="save_preferences">
        <property name="text">
-        <string>Save Preferences</string>
+        <string>&amp;Save Preferences</string>
+       </property>
+       <property name="shortcut">
+        <string>Alt+S</string>
        </property>
       </widget>
      </item>
@@ -222,49 +313,6 @@
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <widget class="QGroupBox" name="generate_indices_prefs">
-     <property name="title">
-      <string>Location to generate personal Indices files</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="text">
-         <string>CNX Nifty Location</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="personal_nifty_index_file"/>
-      </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="browse_personal_nifty_index">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Nifty Futures Location</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="personal_nifty_futures_file"/>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="browse_personal_nifty_futures">
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
   </layout>
  </widget>
  <tabstops>
@@ -276,6 +324,7 @@
   <tabstop>browse_nse_futures</tabstop>
   <tabstop>downloads_folder</tabstop>
   <tabstop>browse_downloads</tabstop>
+  <tabstop>preserve_downloads</tabstop>
   <tabstop>ami_eod_db_folder</tabstop>
   <tabstop>browse_ami_eod_db</tabstop>
   <tabstop>ami_intraday_db_folder</tabstop>
@@ -287,10 +336,10 @@
   <tabstop>browse_personal_nifty_index</tabstop>
   <tabstop>personal_nifty_futures_file</tabstop>
   <tabstop>browse_personal_nifty_futures</tabstop>
-  <tabstop>preserve_downloads</tabstop>
-  <tabstop>restore_default_preferences</tabstop>
   <tabstop>save_preferences</tabstop>
   <tabstop>cancel_preferences</tabstop>
+  <tabstop>restore_default_preferences</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>
