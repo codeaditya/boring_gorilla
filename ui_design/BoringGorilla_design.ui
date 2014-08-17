@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>403</height>
+    <width>960</width>
+    <height>540</height>
    </rect>
   </property>
   <property name="font">
@@ -89,6 +89,9 @@
            <property name="text">
             <string>Ignore Weekend</string>
            </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -168,7 +171,10 @@
              <string extracomment="process the files for checked segments for selected dates"/>
             </property>
             <property name="text">
-             <string>Process</string>
+             <string>&amp;Process</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+P</string>
             </property>
             <property name="autoDefault">
              <bool>true</bool>
@@ -178,14 +184,20 @@
           <item row="0" column="1">
            <widget class="QPushButton" name="import_in_ami_button">
             <property name="text">
-             <string>Import in Ami</string>
+             <string>Import in &amp;Ami</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+A</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QPushButton" name="generate_indices_button">
             <property name="text">
-             <string>Generate Indices</string>
+             <string>&amp;Generate Indices</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+G</string>
             </property>
            </widget>
           </item>
@@ -225,7 +237,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>720</width>
+     <width>960</width>
      <height>21</height>
     </rect>
    </property>
@@ -284,8 +296,8 @@
   <tabstop>nse_futures</tabstop>
   <tabstop>debugging</tabstop>
   <tabstop>process_button</tabstop>
-  <tabstop>generate_indices_button</tabstop>
   <tabstop>import_in_ami_button</tabstop>
+  <tabstop>generate_indices_button</tabstop>
   <tabstop>exit_button</tabstop>
   <tabstop>log_browser</tabstop>
  </tabstops>

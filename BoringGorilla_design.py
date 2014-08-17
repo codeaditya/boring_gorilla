@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_design\BoringGorilla_design.ui'
 #
-# Created: Sat Jul 12 01:34:12 2014
+# Created: Mon Aug 18 02:28:08 2014
 #      by: PyQt4 UI code generator 4.11
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_BoringGorilla(object):
     def setupUi(self, BoringGorilla):
         BoringGorilla.setObjectName(_fromUtf8("BoringGorilla"))
-        BoringGorilla.resize(720, 403)
+        BoringGorilla.resize(960, 540)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Tahoma"))
         font.setPointSize(12)
@@ -65,6 +65,7 @@ class Ui_BoringGorilla(object):
         self.ignore_weekend = QtGui.QCheckBox(self.date_group)
         self.ignore_weekend.setToolTip(_fromUtf8(""))
         self.ignore_weekend.setStatusTip(_fromUtf8(""))
+        self.ignore_weekend.setChecked(True)
         self.ignore_weekend.setObjectName(_fromUtf8("ignore_weekend"))
         self.gridLayout.addWidget(self.ignore_weekend, 2, 1, 1, 1)
         self.gridLayout_5.addWidget(self.date_group, 0, 0, 1, 1)
@@ -126,7 +127,7 @@ class Ui_BoringGorilla(object):
         self.gridLayout_6.addWidget(self.log_browser, 1, 0, 1, 1)
         BoringGorilla.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(BoringGorilla)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 720, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 960, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -166,9 +167,9 @@ class Ui_BoringGorilla(object):
         BoringGorilla.setTabOrder(self.nse_equities, self.nse_futures)
         BoringGorilla.setTabOrder(self.nse_futures, self.debugging)
         BoringGorilla.setTabOrder(self.debugging, self.process_button)
-        BoringGorilla.setTabOrder(self.process_button, self.generate_indices_button)
-        BoringGorilla.setTabOrder(self.generate_indices_button, self.import_in_ami_button)
-        BoringGorilla.setTabOrder(self.import_in_ami_button, self.exit_button)
+        BoringGorilla.setTabOrder(self.process_button, self.import_in_ami_button)
+        BoringGorilla.setTabOrder(self.import_in_ami_button, self.generate_indices_button)
+        BoringGorilla.setTabOrder(self.generate_indices_button, self.exit_button)
         BoringGorilla.setTabOrder(self.exit_button, self.log_browser)
 
     def retranslateUi(self, BoringGorilla):
@@ -184,9 +185,12 @@ class Ui_BoringGorilla(object):
         self.nse_equities.setText(_translate("BoringGorilla", "NSE Equities", None))
         self.nse_futures.setText(_translate("BoringGorilla", "NSE Futures", None))
         self.debugging.setText(_translate("BoringGorilla", "Debugging", None))
-        self.process_button.setText(_translate("BoringGorilla", "Process", None))
-        self.import_in_ami_button.setText(_translate("BoringGorilla", "Import in Ami", None))
-        self.generate_indices_button.setText(_translate("BoringGorilla", "Generate Indices", None))
+        self.process_button.setText(_translate("BoringGorilla", "&Process", None))
+        self.process_button.setShortcut(_translate("BoringGorilla", "Alt+P", None))
+        self.import_in_ami_button.setText(_translate("BoringGorilla", "Import in &Ami", None))
+        self.import_in_ami_button.setShortcut(_translate("BoringGorilla", "Alt+A", None))
+        self.generate_indices_button.setText(_translate("BoringGorilla", "&Generate Indices", None))
+        self.generate_indices_button.setShortcut(_translate("BoringGorilla", "Alt+G", None))
         self.exit_button.setText(_translate("BoringGorilla", "Exit", None))
         self.menuFile.setTitle(_translate("BoringGorilla", "File", None))
         self.menuSettings.setTitle(_translate("BoringGorilla", "Settings", None))
