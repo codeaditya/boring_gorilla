@@ -17,8 +17,8 @@ import trader
 
 ###############################################################################
 #### Add logging functionality ################################################
-FORMATTER = logging.Formatter("{asctime} - {module:15s} - {process} - "
-                              "{levelname:8s} - {message}", style="{")
+FORMATTER = logging.Formatter("{asctime} - {module:15s} - {levelname:8s} - "
+                              "{message}", style="{")
 LOGGING_LEVEL = logging.INFO
 logger = logging.getLogger("trader")
 logger.setLevel(LOGGING_LEVEL)
