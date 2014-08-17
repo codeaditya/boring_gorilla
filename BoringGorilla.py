@@ -71,7 +71,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.personal_nifty_futures_file = str
         self.preserve_downloads = bool
         # Other Initialization stuff
-        self.ami_import_file_list = []
+        self.file_list = []
         self.nse_futures_file_list = []
         self.output_data = []
         self.selected_nse_futures_data = []
@@ -261,12 +261,12 @@ class BoringGorilla(QtGui.QMainWindow):
         self.get_config_values()
         self.get_ami_import_file_list()
         helpers.DEBUGGING = self.debugging
-        if not self.ami_import_file_list:
+        if not self.file_list:
             logger.warning("Nothing to import.")
         else:
             helpers.import_data_in_amibroker(
                 database_path=self.ami_eod_db_folder,
-                import_file_list=self.ami_import_file_list,
+                import_file_list=self.file_list,
                 import_format=self.ami_import_format_eod,
                 amibroker_visibility=True
             )
@@ -280,7 +280,7 @@ class BoringGorilla(QtGui.QMainWindow):
         """
         self.get_ui_values()
         self.get_config_values()
-        self.ami_import_file_list = []
+        self.file_list = []
         self.nse_futures_file_list = []
         if self.nse_indices:
             self.loop_through_dates_to(self.get_output_file_for_nse_indices)
@@ -293,7 +293,7 @@ class BoringGorilla(QtGui.QMainWindow):
             else:
                 logger.info("Selected import of NSE Futures data.")
                 self.create_selected_nse_futures_file()
-        return self.ami_import_file_list
+        return self.file_list
 
     def loop_through_dates_to(self, function):
         """
@@ -317,7 +317,7 @@ class BoringGorilla(QtGui.QMainWindow):
         file = 'NSE-Indices-{date}.csv'.format(
             date=self.current_date.strftime('%Y-%m-%d'))
         self.file_location = os.path.join(self.nse_indices_folder, file)
-        self.append_file_location_to_list(self.ami_import_file_list)
+        self.append_file_location_to_list(self.file_list)
 
     def get_output_file_for_nse_equities(self):
         """
@@ -328,7 +328,7 @@ class BoringGorilla(QtGui.QMainWindow):
         file = 'NSE-Equities-{date}.csv'.format(
             date=self.current_date.strftime('%Y-%m-%d'))
         self.file_location = os.path.join(self.nse_equities_folder, file)
-        self.append_file_location_to_list(self.ami_import_file_list)
+        self.append_file_location_to_list(self.file_list)
 
     def get_output_file_for_nse_futures(self):
         """
@@ -342,7 +342,7 @@ class BoringGorilla(QtGui.QMainWindow):
         if self.import_selected_nse_futures:
             file_list = self.nse_futures_file_list
         else:
-            file_list = self.ami_import_file_list
+            file_list = self.file_list
         self.append_file_location_to_list(file_list)
 
     def append_file_location_to_list(self, file_list):
@@ -367,7 +367,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.file_location = os.path.join(os.getcwd(),
                                           "selected_nse_futures.csv")
         self.write_selected_nse_futures_data()
-        self.append_file_location_to_list(self.ami_import_file_list)
+        self.append_file_location_to_list(self.file_list)
 
     def generate_selected_nse_futures_data(self):
         """
