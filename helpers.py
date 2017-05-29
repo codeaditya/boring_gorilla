@@ -29,7 +29,7 @@ COMTYPES_AVAILABLE = False
 try:
     import comtypes
     import comtypes.client
-    logger.debug("cometypes module available.")
+    logger.debug("comtypes module available.")
     COMTYPES_AVAILABLE = True
 except ImportError:
     logger.debug("comtypes module not available.")
