@@ -459,8 +459,9 @@ class BoringGorilla(QtGui.QMainWindow):
         self.loop_through_dates_to(self.get_output_file_for_nse_indices)
         self.read_csv_files_as_list(self.file_list)
         for r in self.output_data:
-            if r[0] == "CNXNIFTY":
-                line = (','.join(r[0:6])).replace('-', '').split(',')
+            if r[0] in ("CNXNIFTY", "NIFTY50"):
+                line = (','.join(r[0:6])).replace('-', '').replace(
+                        "CNXNIFTY", "NIFTY50").split(',')
                 processed_data.append(line)
         append_data_to_file(processed_data,
                             self.personal_nifty_index_file)
