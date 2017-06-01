@@ -133,11 +133,8 @@ class BoringGorilla(QtGui.QMainWindow):
         self.ui.import_in_ami_button.clicked.connect(self.import_in_ami_pressed)
         self.ui.generate_indices_button.clicked.connect(self.generate_indices_pressed)
         self.trader_thread.finished.connect(self.restore_ui)
-        self.trader_thread.terminated.connect(self.restore_ui)
         self.ami_thread.finished.connect(self.restore_ui)
-        self.ami_thread.terminated.connect(self.restore_ui)
         self.generate_indices_thread.finished.connect(self.restore_ui)
-        self.generate_indices_thread.terminated.connect(self.restore_ui)
         self.connect(self.dummy_emitter, QtCore.SIGNAL("log_msg(QString)"),
                      self.ui.log_browser.append)
         self.ui.actionPreferences.triggered.connect(self.show_preferences_dialog)
