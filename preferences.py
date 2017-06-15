@@ -10,7 +10,7 @@ import configparser
 import logging
 import os
 
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 
 from Preferences_design import Ui_GorillaPreferences
 
@@ -88,7 +88,7 @@ def browse_folder():
 
     :rtype: str
     """
-    browser = QtGui.QFileDialog()
+    browser = QtWidgets.QFileDialog()
     input_location = browser.getExistingDirectory()
     return input_location
 
@@ -100,12 +100,12 @@ def browse_file_to_save():
 
     :rtype: str
     """
-    browser = QtGui.QFileDialog()
+    browser = QtWidgets.QFileDialog()
     input_location = browser.getSaveFileName()
-    return input_location
+    return input_location[0]
 
 
-class PreferencesDialog(QtGui.QDialog):
+class PreferencesDialog(QtWidgets.QDialog):
     """Create a Preferences Dialog window.
 
     :param parent: the parent of this dialog window
@@ -298,7 +298,7 @@ class PreferencesDialog(QtGui.QDialog):
 if __name__ == "__main__":
     import sys
 
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = PreferencesDialog()
     app.setActiveWindow(window)
     window.show()
