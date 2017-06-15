@@ -45,7 +45,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.trader_thread = None
         self.ami_thread = None
         self.generate_indices_thread = None
-        self.dummy_emitter = None
+        self.log_buffer = None
         self.gui_log_handler = None
         self.start_date = datetime.datetime
         self.end_date = datetime.datetime
@@ -117,8 +117,8 @@ class BoringGorilla(QtGui.QMainWindow):
         Add all the logger instances to GuiLogHandler which emits the
         log messages in realtime.
         """
-        self.dummy_emitter = QtCore.QObject()
-        self.gui_log_handler = helpers.GuiLogHandler(self.dummy_emitter)
+        self.log_buffer = helpers.LogBuffer()
+        self.gui_log_handler = helpers.GuiLogHandler(self.log_buffer)
         self.gui_log_handler.setFormatter(FORMATTER)
         logger.addHandler(self.gui_log_handler)
         logger_preferences.addHandler(self.gui_log_handler)
@@ -135,8 +135,7 @@ class BoringGorilla(QtGui.QMainWindow):
         self.trader_thread.finished.connect(self.restore_ui)
         self.ami_thread.finished.connect(self.restore_ui)
         self.generate_indices_thread.finished.connect(self.restore_ui)
-        self.connect(self.dummy_emitter, QtCore.SIGNAL("log_msg(QString)"),
-                     self.ui.log_browser.append)
+        self.log_buffer.log_msg_signal.connect(self.ui.log_browser.append)
         self.ui.actionPreferences.triggered.connect(self.show_preferences_dialog)
 
     def read_config(self):

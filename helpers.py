@@ -94,14 +94,14 @@ class WorkerThread(QtCore.QThread):
 class GuiLogHandler(logging.Handler):
     """Create a QtCore.QObject which emits the formatted log messages.
 
-    :param sig_emitter: the object that emits the log message.
+    :param log_buffer: the object that emits the log message.
 
-    :type sig_emitter: QtCore.QObject
+    :type log_buffer: QtCore.QObject
     """
 
-    def __init__(self, sig_emitter):
+    def __init__(self, log_buffer):
         super(GuiLogHandler, self).__init__()
-        self.sig_emitter = sig_emitter
+        self.log_buffer = log_buffer
 
     def emit(self, log_record):
         """Emits the formatted log message.
@@ -109,4 +109,18 @@ class GuiLogHandler(logging.Handler):
         :param log_record: the logging statement
         """
         message = self.format(log_record)
-        self.sig_emitter.emit(QtCore.SIGNAL("log_msg(QString)"), message)
+        self.log_buffer.emit_log(message)
+
+
+class LogBuffer(QtCore.QObject):
+    """Create a QtCore.QObject which emits log_msg_signal.
+
+    """
+
+    log_msg_signal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(LogBuffer, self).__init__()
+
+    def emit_log(self, message):
+        self.log_msg_signal.emit(message)
