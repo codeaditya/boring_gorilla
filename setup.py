@@ -30,13 +30,12 @@ if sys.platform == 'win32':
     base = 'Win32GUI'
 
 options = {'build_exe': dict(includes='atexit',
-                             include_files=['LICENSE.txt'])}
+                             include_files=['LICENSE.txt'],
+                             silent=True)}
 executables = [Executable(script='BoringGorilla.py',
                           initScript=None,
                           base=base,
                           targetName='BoringGorilla.exe',
-                          compress=True,
-                          copyDependentFiles=True,
                           icon=None)]
 
 setup(name='BoringGorilla',
