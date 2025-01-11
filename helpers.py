@@ -8,7 +8,7 @@ Provides helper classes and functions for BoringGorilla.
 import logging
 import os.path
 
-from PyQt5 import QtCore
+from PyQt6 import QtCore
 
 ###############################################################################
 #### Add logging functionality ################################################

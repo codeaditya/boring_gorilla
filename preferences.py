@@ -10,7 +10,7 @@ import configparser
 import logging
 import os
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from Preferences_design import Ui_GorillaPreferences
 
@@ -302,4 +302,4 @@ if __name__ == "__main__":
     window = PreferencesDialog()
     app.setActiveWindow(window)
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

@@ -5,10 +5,10 @@ all : design
 design : BoringGorilla_design.py Preferences_design.py
 
 BoringGorilla_design.py : ui_design/BoringGorilla_design.ui
-	pyuic5 ui_design/BoringGorilla_design.ui -o BoringGorilla_design.py
+	pyuic6 ui_design/BoringGorilla_design.ui -o BoringGorilla_design.py
 
 Preferences_design.py : ui_design/Preferences_design.ui
-	pyuic5 ui_design/Preferences_design.ui -o Preferences_design.py
+	pyuic6 ui_design/Preferences_design.ui -o Preferences_design.py
 
 build :
 	python3 setup.py build_exe

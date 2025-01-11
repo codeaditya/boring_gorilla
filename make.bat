@@ -15,8 +15,8 @@ if "%1" == "help" (
 )
 
 if "%1" == "design" (
-	pyuic5 "ui_design\BoringGorilla_design.ui" -o BoringGorilla_design.py
-	pyuic5 "ui_design\Preferences_design.ui" -o Preferences_design.py
+	pyuic6 "ui_design\BoringGorilla_design.ui" -o BoringGorilla_design.py
+	pyuic6 "ui_design\Preferences_design.ui" -o Preferences_design.py
 	echo.
 	echo.Design file generated - BoringGorilla_design.py
 	echo.Design file generated - Preferences_design.py

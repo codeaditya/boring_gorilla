@@ -7,13 +7,12 @@ import logging
 import os.path
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+import trader
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 from BoringGorilla_design import Ui_BoringGorilla
 from preferences import PreferencesDialog, process_config
 import helpers
-
-import trader
 
 ###############################################################################
 #### Add logging functionality ################################################
@@ -100,7 +99,7 @@ class BoringGorilla(QtWidgets.QMainWindow):
         self.monospace_font = QtGui.QFont("Monospace")
         # StyleHint is required for Windows, otherwise it shows up in
         # normal font
-        self.monospace_font.setStyleHint(QtGui.QFont.TypeWriter)
+        self.monospace_font.setStyleHint(QtGui.QFont.StyleHint.TypeWriter)
         self.ui.log_browser.setCurrentFont(self.monospace_font)
 
     def create_worker_threads(self):
@@ -522,4 +521,4 @@ if __name__ == "__main__":
     window = BoringGorilla()
     app.setActiveWindow(window)
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
