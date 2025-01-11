@@ -1,1 +1,1 @@
-python3 BoringGorilla.py
+python BoringGorilla.py

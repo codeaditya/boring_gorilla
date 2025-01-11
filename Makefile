@@ -5,17 +5,13 @@ all : design
 design : BoringGorilla_design.py Preferences_design.py
 
 BoringGorilla_design.py : ui_design/BoringGorilla_design.ui
-	pyuic4 ui_design/BoringGorilla_design.ui -o BoringGorilla_design.py
+	pyuic5 ui_design/BoringGorilla_design.ui -o BoringGorilla_design.py
 
 Preferences_design.py : ui_design/Preferences_design.ui
-	pyuic4 ui_design/Preferences_design.ui -o Preferences_design.py
+	pyuic5 ui_design/Preferences_design.ui -o Preferences_design.py
 
 build :
-	python3 setup.py sdist
-
-buildall : build
-	python3 setup.py bdist_msi
-	python3 setup.py bdist_wininst
+	python3 setup.py build_exe
 
 clean :
 	rm -rf __pycache__

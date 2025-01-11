@@ -33,9 +33,8 @@ options = {'build_exe': dict(includes='atexit',
                              include_files=['LICENSE.txt'],
                              silent=True)}
 executables = [Executable(script='BoringGorilla.py',
-                          initScript=None,
                           base=base,
-                          targetName='BoringGorilla.exe',
+                          target_name='BoringGorilla.exe',
                           icon=None)]
 
 setup(name='BoringGorilla',

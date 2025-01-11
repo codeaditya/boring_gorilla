@@ -25,18 +25,9 @@ if "%1" == "design" (
 )
 
 if "%1" == "build" (
-    python3 setup.py build_exe
+    python setup.py build_exe
 	echo.
 	echo.Build build_exe finished.
-	goto end
-)
-
-if "%1%" == "buildall" (
-	python3 setup.py bdist_msi
-	python3 setup.py bdist_wininst
-	echo.
-	echo.Build bdist_msi finished.
-	echo.Build bdist_wininst finished.
 	goto end
 )
 
