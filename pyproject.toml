@@ -44,5 +44,12 @@ executables = [
 include-files = ["LICENSE.txt"]
 silent = true
 
+[tool.ruff]
+extend-exclude = [
+    # auto-generated design files
+    "BoringGorilla_design.py",
+    "Preferences_design.py",
+]
+
 # ... other project metadata fields as listed in:
 #     https://packaging.python.org/en/latest/guides/writing-pyproject-toml/

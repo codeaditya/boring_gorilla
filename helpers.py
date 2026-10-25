@@ -1,5 +1,4 @@
-# !/usr/bin/python3
-# -*- coding: utf-8 -*-
+#!/usr/bin/python3
 
 """
 Provides helper classes and functions for BoringGorilla.
@@ -12,8 +11,9 @@ from PyQt6 import QtCore
 
 ###############################################################################
 #### Add logging functionality ################################################
-FORMATTER = logging.Formatter("{asctime} - {module:15s} - {process} - "
-                              "{levelname:8s} - {message}", style="{")
+FORMATTER = logging.Formatter(
+    "{asctime} - {module:15s} - {process} - {levelname:8s} - {message}", style="{"
+)
 LOGGING_LEVEL = logging.DEBUG
 # logging.Logger object
 logger = logging.getLogger(__name__)
@@ -56,14 +56,13 @@ def import_data_in_amibroker(database_path, import_file_list, import_format,
             ami.LoadDatabase(database_path)
         for import_file in import_file_list:
             filename = os.path.basename(import_file)
-            logger.info("Importing: {0}".format(filename))
+            logger.info(f"Importing: {filename}")
             if not DEBUGGING:
                 ami.Import(0, import_file, import_format)
         if not DEBUGGING:
             ami.RefreshAll()
             ami.SaveDataBase()
-        logger.debug("Data imported in AmiBroker Database: {0}"
-                     "".format(database_path))
+        logger.debug(f"Data imported in AmiBroker Database: {database_path}")
     else:
         logger.warning("Data cannot be imported in AmiBroker since comtypes "
                        "module is not available.")
@@ -80,7 +79,7 @@ class WorkerThread(QtCore.QThread):
     """
 
     def __init__(self, func, args):
-        super(WorkerThread, self).__init__()
+        super().__init__()
         self.func = func
         self.args = args
 
@@ -100,7 +99,7 @@ class GuiLogHandler(logging.Handler):
     """
 
     def __init__(self, log_buffer):
-        super(GuiLogHandler, self).__init__()
+        super().__init__()
         self.log_buffer = log_buffer
 
     def emit(self, log_record):
@@ -120,7 +119,7 @@ class LogBuffer(QtCore.QObject):
     log_msg_signal = QtCore.pyqtSignal(str)
 
     def __init__(self):
-        super(LogBuffer, self).__init__()
+        super().__init__()
 
     def emit_log(self, message):
         self.log_msg_signal.emit(message)
